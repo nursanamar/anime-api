@@ -1,6 +1,6 @@
 const cherioo = require('cheerio')
-const nodeFetch = require('node-fetch')
-const fetch = require('fetch-cookie')(nodeFetch)
+const fetch = require('node-fetch')
+
 
 
 async function getCookie() {
