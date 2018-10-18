@@ -8,12 +8,14 @@ module.exports.animeList = (callback = () => {},err = () => {}) => {
     }).then(html => {
         let $ = cherioo.load(html);
         let list = []
+        console.log(html)
         $(".depan").each((index,el) => {
             let temp = {};
             temp.title = $(".homejudul",el).text();
             temp.thumbnail = $("amp-img",el).attr('src');
             temp.url = $('.homejudul',el).attr('href');
             list.push(temp);
+            console.log(temp)
         })
         let res = {
             status: "success",
