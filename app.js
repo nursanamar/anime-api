@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express();
 const bodyParser = require("body-parser")
-const { animeList,page,search,openVideo } = require("./scrape/Scrape.js");
+const { animeList,page,search,openVideo,listEpisode } = require("./scrape/Scrape.js");
 const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
@@ -31,6 +31,13 @@ app.get("/search/:query",(req,res) => {
 app.post("/video",(req,res) => {
     let {url} = req.body
     openVideo(url,(data) => {
+        res.send(data);
+    })
+})
+
+app.post("/episode", (req, res) => {
+    let { url } = req.body
+    listEpisode(url, (data) => {
         res.send(data);
     })
 })

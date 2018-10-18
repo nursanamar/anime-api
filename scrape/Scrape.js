@@ -2,7 +2,7 @@ const cherioo = require('cheerio')
 const fetch = require('node-fetch')
 
 module.exports.animeList = (callback = () => {},err = () => {}) => {
-    fetch("http://anoboy.org",{
+    fetch("http://anoboy.org/anime-list-sub-indo/",{
         headers : {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
         }
@@ -11,16 +11,18 @@ module.exports.animeList = (callback = () => {},err = () => {}) => {
         console.log(res);
     }).then(html => {
         let $ = cherioo.load(html);
-        let list = []
+        let list = {} 
+        list.ongoing = []
+        list.abjacd = []
         console.log(html)
-        $(".depan").each((index,el) => {
+        $(".OnGoing").each((index,el) => {
             let temp = {};
-            temp.title = $(".homejudul",el).text();
-            temp.thumbnail = $("amp-img",el).attr('src');
-            temp.url = $('.homejudul',el).attr('href');
-            list.push(temp);
-            console.log(temp)
+            temp.title = $("a",el).text();
+            temp.url = $('a',el).attr('href');
+            list.ongoing.push(temp);
+            // console.log(temp)
         })
+        
         let res = {
             status: "success",
             data : list
@@ -75,6 +77,31 @@ module.exports.openVideo = (url,callback = () => {},err = () => {}) => {
             data : result
         }
         
+        callback(res);
+    }).catch(err => {
+        err(err);
+        console.log(err)
+    })
+}
+
+module.exports.listEpisode = (url, callback = () => { }, err = () => { }) => {
+    fetch(url).then(res => {
+
+        return res.text()
+    }).then(html => {
+        let $ = cherioo.load(html);
+        let result = []
+        $('.lcp_catlist > li').each((index,el) => {
+            let temp = {}
+            temp.title = $("a",el).text();
+            temp.url = $("a",el).attr("href");
+            result.push(temp); 
+        })
+        let res = {
+            status: "success",
+            data: result
+        }
+
         callback(res);
     }).catch(err => {
         err(err);
