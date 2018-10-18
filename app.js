@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const bodyParser = require("body-parser")
 const { animeList,page,search,openVideo } = require("./scrape/Scrape.js");
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 
