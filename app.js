@@ -35,4 +35,4 @@ app.post("/video",(req,res) => {
     })
 })
 
-app.listen(port,"localhost",() => console.log("run"));
+app.listen(port,"localhost",() => console.log("runing on port "+port));
