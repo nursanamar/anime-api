@@ -1,15 +1,24 @@
 const cherioo = require('cheerio')
 const fetch = require('node-fetch')
 
-module.exports.animeList = (callback = () => {},err = () => {}) => {
+
+async function getCookie() {
+    let req = await fetch("http://anoboy.org");
+    return req.headers.get("set-cookie")
+}
+
+
+module.exports.animeList = async (callback = () => {},err = () => {}) => {
+    let req = await fetch("http://anoboy.org");
+    let cookie = req.headers.get("set-cookie")
     fetch("http://anoboy.org/anime-list-sub-indo/",{
         headers : {
-            "credentials": "same-origin",
+            "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
         }
     }).then(res => {
         return res.text();
-        console.log(res);
+       
     }).then(html => {
         let $ = cherioo.load(html);
         let list = {} 
