@@ -10,6 +10,7 @@ async function getCookie() {
 
 
 module.exports.animeList = async (callback = () => {},err = () => {}) => {
+    let cookie = getCookie()
     fetch("http://anoboy.org/anime-list-sub-indo/",{
         headers : {
             "Cookie": cookie,
