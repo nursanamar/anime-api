@@ -1,5 +1,6 @@
 const cherioo = require('cheerio')
-const fetch = require('node-fetch')
+const nodeFetch = require('node-fetch')
+const fetch = require('fetch-cookie')(nodeFetch)
 
 
 async function getCookie() {
@@ -9,8 +10,7 @@ async function getCookie() {
 
 
 module.exports.animeList = async (callback = () => {},err = () => {}) => {
-    let req = await fetch("http://anoboy.org");
-    let cookie = req.headers.get("set-cookie")
+   
     fetch("http://anoboy.org/anime-list-sub-indo/",{
         headers : {
             "Cookie": cookie,
@@ -18,7 +18,6 @@ module.exports.animeList = async (callback = () => {},err = () => {}) => {
         }
     }).then(res => {
         return res.text();
-       
     }).then(html => {
         let $ = cherioo.load(html);
         let list = {} 
