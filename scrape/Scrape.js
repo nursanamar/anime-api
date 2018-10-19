@@ -15,20 +15,19 @@ module.exports.animeList = async (callback = () => {},err = () => {}) => {
         return res.text();
     }).then(html => {
         let $ = cherioo.load(html);
-        let list = {} 
-        list.ongoing = []
-        list.abjacd = []
-        console.log(html)
-        // $(".OnGoing").each((index,el) => {
-        //     let temp = {};
-        //     temp.title = $("a",el).text();
-        //     temp.url = $('a',el).attr('href');
-        //     list.ongoing.push(temp);
-        //     // console.log(temp)
-        // })
+        let list = []
+        $(".sakata").each((index,el) => {
+            let temp = {};
+            temp.title = $(".episodeyes > a",el).text();
+            temp.url = $(".episodeyes > a",el).attr('href');
+            temp.thumbnail = $("img",el).attr("src");
+            list.push(temp);
+            // console.log(temp)
+        })
         
         let res = {
             status: "success",
+            total: list.length,
             data : list
         }
         callback(res);
@@ -95,10 +94,14 @@ module.exports.listEpisode = (url, callback = () => { }, err = () => { }) => {
     }).then(html => {
         let $ = cherioo.load(html);
         let result = []
-        $('.lcp_catlist > li').each((index,el) => {
+
+        
+        $('.episodelist > ul > li').each((index,el) => {
             let temp = {}
-            temp.title = $("a",el).text();
-            temp.url = $("a",el).attr("href");
+            temp.title = $(".lefttitle > a",el).text();
+            temp.url = $(".lefttitle > a",el).attr("href");
+            temp.episode = $(".leftoff",el).text();
+            temp.release = $(".rightoff",el).text();
             result.push(temp); 
         })
         let res = {
