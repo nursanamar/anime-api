@@ -10,13 +10,8 @@ async function getCookie() {
 
 
 module.exports.animeList = async (callback = () => {},err = () => {}) => {
-    let cookie = getCookie()
-    fetch("http://anoboy.org/anime-list-sub-indo/",{
-        headers : {
-            "Cookie": cookie,
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-        }
-    }).then(res => {
+    // let cookie = getCookie()
+    fetch("https://www.riie.net").then(res => {
         return res.text();
     }).then(html => {
         let $ = cherioo.load(html);
@@ -24,13 +19,13 @@ module.exports.animeList = async (callback = () => {},err = () => {}) => {
         list.ongoing = []
         list.abjacd = []
         console.log(html)
-        $(".OnGoing").each((index,el) => {
-            let temp = {};
-            temp.title = $("a",el).text();
-            temp.url = $('a',el).attr('href');
-            list.ongoing.push(temp);
-            // console.log(temp)
-        })
+        // $(".OnGoing").each((index,el) => {
+        //     let temp = {};
+        //     temp.title = $("a",el).text();
+        //     temp.url = $('a',el).attr('href');
+        //     list.ongoing.push(temp);
+        //     // console.log(temp)
+        // })
         
         let res = {
             status: "success",
